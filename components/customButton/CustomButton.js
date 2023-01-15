@@ -6,7 +6,7 @@ export const CustomButton = ({ label, icon }) => {
   return (
     <View>
       {icon ? (
-        <View>
+        <View style={containers.main}>
           <TouchableOpacity style={controls.buttonWithIcon}>
             <View style={containers.buttonContainer}>
               <Fontisto
@@ -20,7 +20,7 @@ export const CustomButton = ({ label, icon }) => {
           </TouchableOpacity>
         </View>
       ) : (
-        <View>
+        <View style={containers.main}>
           <TouchableOpacity style={controls.button}>
             <Text style={texts.buttonLabel}>{label}</Text>
           </TouchableOpacity>

@@ -22,7 +22,8 @@ export const controls = StyleSheet.create({
     width: '100%',
     height: 50,
     borderRadius: 5,
-    paddingLeft: 10
+    paddingLeft: 10,
+    color:'black'
   }
 })
 

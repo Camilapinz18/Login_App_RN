@@ -6,6 +6,10 @@ export const containers = StyleSheet.create({
     flexDirection: 'row',
     //backgroundColor: 'green',
     justifyContent:'space-evenly'
+  },
+  main:{
+    display:'flex',
+    alignItems:'center'
   }
 })
 
@@ -15,7 +19,8 @@ export const controls = StyleSheet.create({
     backgroundColor: '#0B1E38',
     height: 50,
     borderRadius: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width:280
   },
   buttonWithIcon: {
     marginTop: 20,
@@ -23,6 +28,7 @@ export const controls = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',
+    width:280
     //backgroundColor: 'blue'
   }
 })
