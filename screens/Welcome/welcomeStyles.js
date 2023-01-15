@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export const containers = StyleSheet.create({
   main: {
-    //backgroundColor: 'blue',
+    backgroundColor: 'white',
     display: 'flex',
     width: '100%'
     //paddingTop:50

@@ -3,8 +3,12 @@ import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { containers, texts, graphics } from '../Welcome/welcomeStyles'
 import { CustomButton } from '../../components/customButton/CustomButton'
+import { useNavigation } from '@react-navigation/native'
+
 
 const Welcome = () => {
+    const navigation = useNavigation()
+
   return (
     <ScrollView>
       <StatusBar style='dark' />
@@ -18,7 +22,7 @@ const Welcome = () => {
           <Text style={texts.info}>Camila Pinzón</Text>
           <Text style={texts.info}>camilapinz18@gmail.com</Text>
         </View>
-        <CustomButton label='Logout'/>
+        <CustomButton label='Logout' navigation={()=>navigation.navigate("Login")}/>
       </View>
     </ScrollView>
   )

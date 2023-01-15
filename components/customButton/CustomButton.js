@@ -2,7 +2,7 @@ import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native'
 import { controls, texts, graphics, containers } from './customButtonStyles'
 import Fontisto from '@expo/vector-icons/Fontisto'
 
-export const CustomButton = ({ label, icon }) => {
+export const CustomButton = ({ label, icon,navigation }) => {
   return (
     <View>
       {icon ? (
@@ -21,7 +21,7 @@ export const CustomButton = ({ label, icon }) => {
         </View>
       ) : (
         <View style={containers.main}>
-          <TouchableOpacity style={controls.button}>
+          <TouchableOpacity style={controls.button} onPress={navigation}>
             <Text style={texts.buttonLabel}>{label}</Text>
           </TouchableOpacity>
         </View>
