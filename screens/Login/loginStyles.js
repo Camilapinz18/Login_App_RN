@@ -48,3 +48,21 @@ export const containers = StyleSheet.create({
     marginTop: 14
   }
 })
+
+
+export const controlls = StyleSheet.create({
+  button: {
+    backgroundColor: 'red',
+    width: '100%',
+    height: '100%',
+    
+  },
+  textContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    //backgroundColor: 'red',
+    justifyContent: 'center',
+    //alignContent:'center',
+    marginTop: 14
+  }
+})

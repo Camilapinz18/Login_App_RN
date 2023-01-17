@@ -1,14 +1,59 @@
 import React from 'react'
-import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native'
-
+import { useState } from 'react'
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  TextInput,
+  Button
+} from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { graphics, containers, texts } from './loginStyles'
+import { Formik } from 'formik'
+import { graphics, containers, texts, controlls } from './loginStyles'
 import { useNavigation } from '@react-navigation/native'
 import { CustomButton } from '../../components/customButton/CustomButton'
 import { InputComponent } from '../../components/InputComponent/InputComponent'
+import { MessageBox } from '../../components/MessageBox/MessageBox'
+import axios from 'axios'
 
 const Login = () => {
   const navigation = useNavigation()
+  const [message, setMessage] = useState('')
+  const [messageType, setMessageType] = useState('')
+
+  const handleLogin = credentials => {
+    console.log('estoy en handleLogin')
+    const url = 'https://panicky-foal-wear.cyclic.app/api/user/signin'
+    axios
+      .post(url, credentials)
+      .then(response => {
+        const result = response.data
+        const { message, status, data } = result
+
+        if (status !== 'OK') {
+          handleMessage(message, status)
+          console.log('result', result)
+        } else {
+          console.log('result', result)
+          navigation.navigate('Welcome')
+        }
+      })
+
+      .catch(error => {
+        console.log(error)
+        handleMessage('An error ocurred', 'FAILED')
+      })
+  }
+
+  const handleMessage = (message, type = 'FAILED') => {
+    setMessage(message)
+    setMessageType(type)
+  }
+
+  const getInputValues = () => {}
   return (
     <ScrollView>
       <View style={containers.main}>
@@ -22,30 +67,63 @@ const Login = () => {
         <Text style={texts.subtitle}>Account login</Text>
 
         <View>
-          <View>
-            <InputComponent
-              label='Email address'
-              icon='mail'
-              placeholder='yourmail@mail.com'
-              type='text'
-            />
-            <InputComponent
-              label='Password'
-              icon='lock'
-              eye='eye'
-              placeholder='******'
-              type='password'
-            />
-          </View>
-          <CustomButton label='Login' icon={false} navigation={()=>navigation.navigate("Welcome")}/>
+          <View></View>
+
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            onSubmit={values => console.log('VALUES', values)}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <View>
+                <InputComponent
+                  label='Email address'
+                  icon='mail'
+                  placeholder='yourmail@mail.com'
+                  type='text'
+                  handleChange={handleChange('email')}
+                  handleBlur={handleBlur('email')}
+                  value={values.email}
+                />
+
+                <InputComponent
+                  label='Password'
+                  icon='lock'
+                  eye='eye'
+                  placeholder='******'
+                  type='password'
+                  handleChange={handleChange('password')}
+                  handleBlur={handleBlur('password')}
+                  value={values.password}
+                />
+
+                <CustomButton
+                  label='Login'
+                  icon={false}
+                  handleSubmit={handleSubmit}
+                />
+                <CustomButton
+                  label='Sign in with Google'
+                  icon={true}
+                  handleSubmit={handleSubmit}
+                />
+                <MessageBox message='Hola' />
+              </View>
+            )}
+          </Formik>
+          {/* <CustomButton
+            label='Login'
+            icon={false}
+            //navigation={() => navigation.navigate('Welcome')}
+            handleLogin={handleLogin}
+          />
           <View>
             <CustomButton label='Sign in with Google' icon={true} />
-          </View>
+          </View> */}
           <View style={containers.textContainer}>
             <Text style={texts.accountText}>
               Don't you have an account already?
             </Text>
-            <TouchableOpacity onPressOut={()=>navigation.navigate('Signup')}>
+            <TouchableOpacity onPressOut={() => navigation.navigate('Signup')}>
               <Text style={texts.accountTextLink}> Sign Up!</Text>
             </TouchableOpacity>
           </View>

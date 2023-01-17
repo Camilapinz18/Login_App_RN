@@ -13,9 +13,14 @@ export const InputComponent = ({
   eye,
   editable,
   showDatePicker,
-  value
+  value,
+  onChangeText,
+  obBlur,
+  
+  keyboardType,
+  handleChange,handleBlur
 }) => {
-  // console.log(icon)
+  //console.log(handleChange,"handlechange")
 
   const [hidePassword, setHidePassword] = useState(true)
   return (
@@ -28,6 +33,9 @@ export const InputComponent = ({
               style={controls.input}
               placeholder={placeholder}
               secureTextEntry={secureTextEntry}
+              onChangeText={handleChange}
+              onBlur={handleBlur}
+              value={value}
             />
             <Octicons
               name={icon}
@@ -45,6 +53,9 @@ export const InputComponent = ({
               style={controls.input}
               placeholder={placeholder}
               secureTextEntry={hidePassword}
+              onChangeText={handleChange}
+              onBlur={handleBlur}
+              value={value}
             />
             <Octicons
               name={icon}
