@@ -54,6 +54,21 @@ const Login = () => {
   }
 
   const getInputValues = () => {}
+
+  const handlePrueba = (email, password) => {
+    console.log('estoy en handle prueba')
+    console.log('mail', email, 'password', password)
+
+    const object = {
+      email: email,
+      password: password
+    }
+    axios
+      .post('https://panicky-foal-wear.cyclic.app/api/poster', object)
+      .then(response => console.log('response', response.data))
+      .catch(error => console.log(error))
+  }
+
   return (
     <ScrollView>
       <View style={containers.main}>
@@ -71,7 +86,10 @@ const Login = () => {
 
           <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={values => console.log('VALUES', values)}
+            onSubmit={values => {
+              console.log('VALUES', values)
+              handlePrueba(values.email, values.password)
+            }}
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View>
