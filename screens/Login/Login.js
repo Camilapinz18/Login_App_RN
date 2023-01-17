@@ -24,30 +24,6 @@ const Login = () => {
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('')
 
-  const handleLogin = credentials => {
-    console.log('estoy en handleLogin')
-    const url = 'https://panicky-foal-wear.cyclic.app/api/user/signin'
-    axios
-      .post(url, credentials)
-      .then(response => {
-        const result = response.data
-        const { message, status, data } = result
-
-        if (status !== 'OK') {
-          handleMessage(message, status)
-          console.log('result', result)
-        } else {
-          console.log('result', result)
-          navigation.navigate('Welcome')
-        }
-      })
-
-      .catch(error => {
-        console.log(error)
-        handleMessage('An error ocurred', 'FAILED')
-      })
-  }
-
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message)
     setMessageType(type)
@@ -55,17 +31,20 @@ const Login = () => {
 
   const getInputValues = () => {}
 
-  const handlePrueba = (email, password) => {
-    console.log('estoy en handle prueba')
-    console.log('mail', email, 'password', password)
+  const handleLogin = (email, password) => {
+    console.log('estoy en handle login')
+    //console.log('mail', email, 'password', password)
 
     const object = {
       email: email,
       password: password
     }
     axios
-      .post('https://panicky-foal-wear.cyclic.app/api/poster', object)
-      .then(response => console.log('response', response.data))
+      .post('https://panicky-foal-wear.cyclic.app/api/users/signin', object)
+      .then(response => {
+        console.log('responsedaat', response.data)
+        console.log('response', response.status)
+      })
       .catch(error => console.log(error))
   }
 
@@ -88,7 +67,7 @@ const Login = () => {
             initialValues={{ email: '', password: '' }}
             onSubmit={values => {
               console.log('VALUES', values)
-              handlePrueba(values.email, values.password)
+              handleLogin(values.email, values.password)
             }}
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
