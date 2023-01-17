@@ -23,6 +23,7 @@ const Login = () => {
   const navigation = useNavigation()
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('')
+  const [showMessageBox, setShowMessageBox] = useState(false)
 
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message)
@@ -44,6 +45,15 @@ const Login = () => {
       .then(response => {
         console.log('responsedaat', response.data)
         console.log('response', response.status)
+        if (response.data.status === 'OK') {
+          navigation.navigate('Welcome')
+        } else if (response.data.status === 'FAILED') {
+          setShowMessageBox(true)
+          console.log('ESTOY EN FAILED')
+          setTimeout(() => {
+            setShowMessageBox(false)
+          }, 3000)
+        }
       })
       .catch(error => console.log(error))
   }
@@ -92,6 +102,11 @@ const Login = () => {
                   handleBlur={handleBlur('password')}
                   value={values.password}
                 />
+                {showMessageBox ? (
+                  <MessageBox message='Failed to sign-up' />
+                ) : (
+                  ''
+                )}
 
                 <CustomButton
                   label='Login'
@@ -103,7 +118,6 @@ const Login = () => {
                   icon={true}
                   handleSubmit={handleSubmit}
                 />
-                <MessageBox message='Hola' />
               </View>
             )}
           </Formik>
@@ -116,6 +130,7 @@ const Login = () => {
           <View>
             <CustomButton label='Sign in with Google' icon={true} />
           </View> */}
+
           <View style={containers.textContainer}>
             <Text style={texts.accountText}>
               Don't you have an account already?
