@@ -16,17 +16,20 @@ export const InputComponent = ({
   value,
   onChangeText,
   obBlur,
-  
+  error,
   keyboardType,
-  handleChange,handleBlur
+  handleChange,
+  handleBlur
 }) => {
   //console.log(handleChange,"handlechange")
 
   const [hidePassword, setHidePassword] = useState(true)
   return (
     <View>
+    {console.log("error",error)}
       {type === 'text' ? (
         <View style={containers.mainContainer}>
+          {error ? <Text style={texts.errorText}>{error}</Text> : ''}
           <Text style={texts.labeltext}>{label}</Text>
           <View style={containers.inputContainer}>
             <TextInput
@@ -78,13 +81,11 @@ export const InputComponent = ({
       ) : type === 'date' ? (
         <View style={containers.mainContainer}>
           <Text style={texts.labeltext}>{label}</Text>
-          <TouchableOpacity
-          onPress={showDatePicker}>
+          <TouchableOpacity onPress={showDatePicker}>
             <View style={containers.inputContainer}>
               <TextInput
                 style={controls.input}
                 placeholder={placeholder}
-                
                 secureTextEntry={secureTextEntry}
                 editable={editable}
                 value={value}

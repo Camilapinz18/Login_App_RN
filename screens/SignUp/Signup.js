@@ -9,12 +9,14 @@ import { InputComponent } from '../../components/InputComponent/InputComponent'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import axios from 'axios'
 import { Formik } from 'formik'
+import * as yup from 'yup'
 
 const Signup = () => {
   const navigation = useNavigation()
   const [show, setShow] = useState(false)
   const [date, setDate] = useState(new Date())
   const [birth, setBirth] = useState()
+  const [isLoading, setIsLoading] = useState(false)
 
   const onChange = (event, selectedDate) => {
     setShow(false)
@@ -37,21 +39,42 @@ const Signup = () => {
       birthDate: birthDate,
       password: password
     }
-
+    setIsLoading(true)
     axios
       .post('https://panicky-foal-wear.cyclic.app/api/users/signup', object)
       .then(response => {
         console.log('Estoy en response')
         if (response.data.status === 'OK') {
           console.log('foe ok')
-
+          setIsLoading(false)
           navigation.navigate('Welcome')
-        } else if (response.data.status === 'FAILED'){
-          console.log('clave incorrect')
+        } else if (response.data.status === 'FAILED') {
+          setIsLoading(false)
           alert(response.data.message)
         }
       })
   }
+
+  const validationSchema = yup.object({
+    name: yup
+      .string()
+      .trim()
+      .min(3, 'Invalid name')
+      .required('Name is required'),
+    email: yup
+      .string()
+      .trim()
+      .email('Invalid email')
+      .required('Email is required'),
+    password: yup
+      .string()
+      .trim()
+      .min(8, 'Password is too short')
+      .required('Password is required')
+    // confirmPassword: yup
+    //   .string()
+    //   .equals(yup.ref('password'), 'Password must match')
+  })
 
   return (
     <ScrollView>
@@ -73,13 +96,16 @@ const Signup = () => {
             //console.log('VALUES', values)
             handleSignUp(values.name, values.email, birth, values.password)
           }}
+          validationSchema={validationSchema}
         >
           {({
             handleChange,
             handleBlur,
             handleSubmit,
             values,
-            isSubmitted
+            touched,
+            isSubmitted,
+            errors
           }) => (
             <View>
               <View>
@@ -91,14 +117,18 @@ const Signup = () => {
                   handleChange={handleChange('name')}
                   value={values.name}
                   //onChangeText={handleChange}
+                  onBlur={handleBlur('name')}
+                  error={touched.name && errors.name}
                 />
                 <InputComponent
                   label='Email address'
                   icon='mail'
                   placeholder='yourmail@mail.com'
                   type='text'
+                  onBlur={handleBlur('email')}
                   handleChange={handleChange('email')}
                   value={values.email}
+                  error={touched.email && errors.email}
                 />
                 {show && (
                   <DateTimePicker
@@ -115,11 +145,13 @@ const Signup = () => {
                   label='Birth date'
                   icon='calendar'
                   placeholder='DD/MM/YYYY'
+                  onBlur={handleBlur('birthDate')}
                   handleChange={handleChange('birthDate')}
                   value={birth ? birth.toDateString() : ''}
                   type='date'
                   editable={false}
                   showDatePicker={showDatePicker}
+                  error={touched.birthDate && errors.birthDate}
                 />
                 <InputComponent
                   label='Password'
@@ -127,8 +159,10 @@ const Signup = () => {
                   eye='eye'
                   placeholder='******'
                   type='password'
+                  onBlur={handleBlur('password')}
                   handleChange={handleChange('password')}
                   value={values.password}
+                  error={touched.password && errors.password}
                 />
                 <InputComponent
                   label='Confirm password'
@@ -136,8 +170,10 @@ const Signup = () => {
                   eye='eye'
                   placeholder='******'
                   type='password'
+                  onBlur={handleBlur('confirmPassword')}
                   handleChange={handleChange('confirmPassword')}
                   value={values.confirmPassword}
+                  error={touched.confirmPassword && errors.confirmPassword}
                 />
               </View>
               <CustomButton
@@ -145,9 +181,14 @@ const Signup = () => {
                 icon={false}
                 //navigation={() => navigation.navigate('Welcome')}
                 handleSubmit={handleSubmit}
+                isLoading={isLoading}
               />
               <View>
-                <CustomButton label='Sign up with Google' icon={true} />
+                <CustomButton
+                  label='Sign up with Google'
+                  icon={true}
+                  isLoading={isLoading}
+                />
               </View>
             </View>
           )}

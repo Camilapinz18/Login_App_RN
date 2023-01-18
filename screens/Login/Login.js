@@ -67,6 +67,10 @@ const Login = () => {
       .catch(error => console.log(error))
   }
 
+  // const handleGoogleSignin=()={
+
+  // }
+
   return (
     <ScrollView>
       <View style={containers.main}>

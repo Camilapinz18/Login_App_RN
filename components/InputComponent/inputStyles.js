@@ -34,6 +34,13 @@ export const controls = StyleSheet.create({
 export const texts = StyleSheet.create({
   labeltext: {
     marginBottom: 5
+  },
+  errorText: {
+    color: '#FF0A61',
+    fontWeight:'bold',
+    position:'absolute',
+    alignSelf:'flex-end',
+    //backgroundColor:'yellow'
   }
 })
 
