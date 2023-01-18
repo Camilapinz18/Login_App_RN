@@ -1,4 +1,11 @@
-import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator
+} from 'react-native'
 import { controls, texts, graphics, containers } from './customButtonStyles'
 import Fontisto from '@expo/vector-icons/Fontisto'
 
@@ -7,7 +14,8 @@ export const CustomButton = ({
   icon,
   navigation,
   handleLogin,
-  handleSubmit
+  handleSubmit,
+  isLoading
 }) => {
   return (
     <View>
@@ -16,6 +24,7 @@ export const CustomButton = ({
           <TouchableOpacity
             style={controls.buttonWithIcon}
             onPress={handleSubmit}
+            disabled={isLoading ? true : false}
           >
             <View style={containers.buttonContainer}>
               <Fontisto
@@ -33,8 +42,13 @@ export const CustomButton = ({
           <TouchableOpacity
             style={controls.button}
             onPress={handleSubmit}
+            disabled={isLoading ? true : false}
           >
-            <Text style={texts.buttonLabel}>{label}</Text>
+            {isLoading ? (
+              <ActivityIndicator size='large' color='#FF0A61' />
+            ) : (
+              <Text style={texts.buttonLabel}>{label}</Text>
+            )}
           </TouchableOpacity>
         </View>
       )}

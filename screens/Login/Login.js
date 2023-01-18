@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
   TextInput,
   Button
 } from 'react-native'
@@ -24,6 +23,7 @@ const Login = () => {
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('')
   const [showMessageBox, setShowMessageBox] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message)
@@ -40,6 +40,7 @@ const Login = () => {
       email: email,
       password: password
     }
+    setIsLoading(true)
     axios
       .post('https://panicky-foal-wear.cyclic.app/api/users/signin', object)
       .then(response => {
@@ -47,13 +48,14 @@ const Login = () => {
         console.log('response', response.status)
         if (response.data.status === 'OK') {
           navigation.navigate('Welcome')
+          setIsLoading(false)
         } else if (response.data.status === 'FAILED') {
-
-          if(response.data.message==='AILED TO Signed IN'){
+          if (response.data.message === 'AILED TO Signed IN') {
             setMessage(response.data.message)
             setShowMessageBox(true)
-            console.log("clave incorrect")
-            alert("Wrong password. Try again")
+            console.log('clave incorrect')
+            alert('Wrong password. Try again')
+            setIsLoading(false)
           }
           //setShowMessageBox(true)
           //console.log('ESTOY EN FAILED')
@@ -88,7 +90,13 @@ const Login = () => {
               handleLogin(values.email, values.password)
             }}
           >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              isSubmitted
+            }) => (
               <View>
                 <InputComponent
                   label='Email address'
@@ -120,8 +128,9 @@ const Login = () => {
                     label='Login'
                     icon={false}
                     handleSubmit={handleSubmit}
+                    isLoading={isLoading}
                   />
-                  {/* <Text style={texts.orText}>or</Text> */}
+
                   <CustomButton
                     label='Sign in with Google'
                     icon={true}
