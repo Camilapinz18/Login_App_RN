@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   View,
   Image,
@@ -17,6 +17,10 @@ import { CustomButton } from '../../components/customButton/CustomButton'
 import { InputComponent } from '../../components/InputComponent/InputComponent'
 import { MessageBox } from '../../components/MessageBox/MessageBox'
 import axios from 'axios'
+import * as WebBrowser from 'expo-web-browser'
+import * as Google from 'expo-auth-session/providers/google'
+
+WebBrowser.maybeCompleteAuthSession()
 
 const Login = () => {
   const navigation = useNavigation()
@@ -24,6 +28,46 @@ const Login = () => {
   const [messageType, setMessageType] = useState('')
   const [showMessageBox, setShowMessageBox] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  const [accessToken, setAccessToken] = useState(null)
+  const [user, setUser] = useState(null)
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId:
+      '889998040806-uim6hgghnibpq0m14dlg1l7dalcdtojl.apps.googleusercontent.com',
+    iosClientId:
+      '889998040806-rmfg9j0n25gep8u6akamebvdu283fbo7.apps.googleusercontent.com',
+    androidClientId:
+      '889998040806-6vobth61nuf5ced3893ers7ks8bamtil.apps.googleusercontent.com'
+  })
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      setAccessToken(response.authentication.accessToken)
+      accessToken && fetchUserInfo()
+    }
+  }, [response, accessToken])
+
+  const showUserInfo = () => {
+    if (user) {
+      return (
+        <View>
+          <Text>Welcome</Text>
+          <Text>{user.name}</Text>
+          <Image source={{ uri: user.picture }} />
+        </View>
+      )
+    }
+  }
+
+  async function fetchUserInfo () {
+    let response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    const useInfo = await response.json()
+    setUser(useInfo)
+  }
 
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message)
@@ -80,13 +124,12 @@ const Login = () => {
           resizeMode='cover'
           style={graphics.logo}
         />
+
         <Text style={texts.title}>Weightlifting Trainer</Text>
 
         <Text style={texts.subtitle}>Account login</Text>
 
         <View>
-         
-
           <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={values => {
@@ -144,6 +187,18 @@ const Login = () => {
               </View>
             )}
           </Formik>
+
+          {user && <showUserInfo />}
+          {user === null && (
+            <View>
+              <Button
+                title='signin'
+                onPress={() => {
+                  promptAsync()
+                }}
+              ></Button>
+            </View>
+          )}
 
           <View style={containers.textContainer}>
             <Text style={texts.accountText}>
