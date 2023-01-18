@@ -27,6 +27,11 @@ export const texts = StyleSheet.create({
     fontSize: 16,
     color: '#FF0A61',
     fontWeight: 'bold'
+  },
+  orText:{
+    paddingTop:20,
+    //backgroundColor:'red'
+    position:'absolute'
   }
 })
 
@@ -37,7 +42,7 @@ export const containers = StyleSheet.create({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 5
   },
   textContainer: {
     display: 'flex',
@@ -45,17 +50,20 @@ export const containers = StyleSheet.create({
     //backgroundColor: 'red',
     justifyContent: 'center',
     //alignContent:'center',
-    marginTop: 14
+    marginTop: 25
+  },
+  buttonsContainer: {
+    marginTop:15,
+    justifyContent:'center',
+    alignItems:'center'
   }
 })
-
 
 export const controlls = StyleSheet.create({
   button: {
     backgroundColor: 'red',
     width: '100%',
-    height: '100%',
-    
+    height: '100%'
   },
   textContainer: {
     display: 'flex',

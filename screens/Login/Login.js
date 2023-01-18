@@ -48,8 +48,15 @@ const Login = () => {
         if (response.data.status === 'OK') {
           navigation.navigate('Welcome')
         } else if (response.data.status === 'FAILED') {
-          setShowMessageBox(true)
-          console.log('ESTOY EN FAILED')
+
+          if(response.data.message==='AILED TO Signed IN'){
+            setMessage(response.data.message)
+            setShowMessageBox(true)
+            console.log("clave incorrect")
+            alert("Wrong password. Try again")
+          }
+          //setShowMessageBox(true)
+          //console.log('ESTOY EN FAILED')
           setTimeout(() => {
             setShowMessageBox(false)
           }, 3000)
@@ -67,7 +74,8 @@ const Login = () => {
           resizeMode='cover'
           style={graphics.logo}
         />
-        <Text style={texts.title}>Weightlifting App</Text>
+        <Text style={texts.title}>Weightlifting Trainer</Text>
+
         <Text style={texts.subtitle}>Account login</Text>
 
         <View>
@@ -85,7 +93,7 @@ const Login = () => {
                 <InputComponent
                   label='Email address'
                   icon='mail'
-                  placeholder='yourmail@mail.com'
+                  placeholder='youremail@email.com'
                   type='text'
                   handleChange={handleChange('email')}
                   handleBlur={handleBlur('email')}
@@ -96,7 +104,7 @@ const Login = () => {
                   label='Password'
                   icon='lock'
                   eye='eye'
-                  placeholder='******'
+                  placeholder='************'
                   type='password'
                   handleChange={handleChange('password')}
                   handleBlur={handleBlur('password')}
@@ -107,29 +115,22 @@ const Login = () => {
                 ) : (
                   ''
                 )}
-
-                <CustomButton
-                  label='Login'
-                  icon={false}
-                  handleSubmit={handleSubmit}
-                />
-                <CustomButton
-                  label='Sign in with Google'
-                  icon={true}
-                  handleSubmit={handleSubmit}
-                />
+                <View style={containers.buttonsContainer}>
+                  <CustomButton
+                    label='Login'
+                    icon={false}
+                    handleSubmit={handleSubmit}
+                  />
+                  {/* <Text style={texts.orText}>or</Text> */}
+                  <CustomButton
+                    label='Sign in with Google'
+                    icon={true}
+                    handleSubmit={handleSubmit}
+                  />
+                </View>
               </View>
             )}
           </Formik>
-          {/* <CustomButton
-            label='Login'
-            icon={false}
-            //navigation={() => navigation.navigate('Welcome')}
-            handleLogin={handleLogin}
-          />
-          <View>
-            <CustomButton label='Sign in with Google' icon={true} />
-          </View> */}
 
           <View style={containers.textContainer}>
             <Text style={texts.accountText}>

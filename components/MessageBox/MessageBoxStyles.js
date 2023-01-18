@@ -6,7 +6,8 @@ export const containers = StyleSheet.create({
     marginTop:15,
     borderRadius:5,
     height:50,
-    justifyContent:'center'
+    justifyContent:'center',
+    position:'absolute'
   }
 })
 

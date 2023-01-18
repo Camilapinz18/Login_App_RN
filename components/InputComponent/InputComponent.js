@@ -61,7 +61,7 @@ export const InputComponent = ({
               name={icon}
               size={20}
               color='#0B1E38'
-              style={graphics.icon}
+              style={graphics.icon2}
             />
             <TouchableOpacity
               style={graphics.touchable}

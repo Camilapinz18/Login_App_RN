@@ -13,6 +13,10 @@ export const containers = StyleSheet.create({
     width: 280,
     paddingLeft: 40,
     paddingRight: 10
+    //backgroundColor:'red'
+  },
+  iconContainer: {
+    position: 'absolute'
   }
 })
 
@@ -23,7 +27,7 @@ export const controls = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     paddingLeft: 10,
-    color:'black'
+    color: 'black'
   }
 })
 
@@ -36,17 +40,20 @@ export const texts = StyleSheet.create({
 export const graphics = StyleSheet.create({
   icon: {
     position: 'absolute',
-    marginLeft: 18,
-  
+    marginLeft: 18
+  },
+  icon2: {
+    position: 'absolute',
+    marginLeft: 21
   },
 
   touchable: {
     position: 'absolute',
     width: 20,
-    height: "100%",
+    height: '100%',
     marginLeft: 250,
-   // backgroundColor:'red',
-    display:'flex',
-    justifyContent:'center'
+    // backgroundColor:'red',
+    display: 'flex',
+    justifyContent: 'center'
   }
 })
