@@ -81,7 +81,7 @@ const Login = () => {
         <Text style={texts.subtitle}>Account login</Text>
 
         <View>
-          <View></View>
+         
 
           <Formik
             initialValues={{ email: '', password: '' }}
