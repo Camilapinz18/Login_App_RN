@@ -26,7 +26,7 @@ export const InputComponent = ({
   const [hidePassword, setHidePassword] = useState(true)
   return (
     <View>
-    {console.log("error",error)}
+      {console.log('error', error)}
       {type === 'text' ? (
         <View style={containers.mainContainer}>
           {error ? <Text style={texts.errorText}>{error}</Text> : ''}
@@ -50,6 +50,7 @@ export const InputComponent = ({
         </View>
       ) : type === 'password' ? (
         <View style={containers.mainContainer}>
+          {error ? <Text style={texts.errorText}>{error}</Text> : ''}
           <Text style={texts.labeltext}>{label}</Text>
           <View style={containers.inputContainer}>
             <TextInput

@@ -32,7 +32,7 @@ const Signup = () => {
 
   const handleSignUp = (name, email, birthDate, password) => {
     console.log('estoy en handle SignUp')
-    //console.log('birthDatereceived', birthDate)
+    console.log('birthDatereceived', birthDate)
     const object = {
       name: name,
       email: email,
@@ -55,25 +55,28 @@ const Signup = () => {
       })
   }
 
-  const validationSchema = yup.object({
-    name: yup
-      .string()
-      .trim()
-      .min(3, 'Invalid name')
-      .required('Name is required'),
+  const validation = () => {}
+
+  const validationSchema = yup.object().shape({
+    name: yup.string().required('a name is required'),
+    startDate: yup.date().default(() => new Date()),
+    birthDate: yup
+      .date()
+      .max(yup.ref('startDate'), "birth date can't be after today's date"),
+
+    //min(yup.ref('date'),"error"),
     email: yup
       .string()
-      .trim()
       .email('Invalid email')
-      .required('Email is required'),
+      .required('an email address is required'),
     password: yup
       .string()
-      .trim()
-      .min(8, 'Password is too short')
-      .required('Password is required')
-    // confirmPassword: yup
-    //   .string()
-    //   .equals(yup.ref('password'), 'Password must match')
+      .required('a password is required')
+      .min(8, 'Password should be 8 chars minimum.')
+      .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'password must contain one number'),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Passwords must match')
   })
 
   return (
@@ -93,9 +96,10 @@ const Signup = () => {
             confirmPassword: ''
           }}
           onSubmit={values => {
-            //console.log('VALUES', values)
+            console.log('VALUES', birth)
             handleSignUp(values.name, values.email, birth, values.password)
           }}
+          validateOnMount={true}
           validationSchema={validationSchema}
         >
           {({
@@ -104,8 +108,9 @@ const Signup = () => {
             handleSubmit,
             values,
             touched,
-            isSubmitted,
-            errors
+            errors,
+            isValid,
+            isSubmitted
           }) => (
             <View>
               <View>
@@ -117,7 +122,7 @@ const Signup = () => {
                   handleChange={handleChange('name')}
                   value={values.name}
                   //onChangeText={handleChange}
-                  onBlur={handleBlur('name')}
+                  handleBlur={handleBlur('name')}
                   error={touched.name && errors.name}
                 />
                 <InputComponent
@@ -125,7 +130,7 @@ const Signup = () => {
                   icon='mail'
                   placeholder='yourmail@mail.com'
                   type='text'
-                  onBlur={handleBlur('email')}
+                  handleBlur={handleBlur('email')}
                   handleChange={handleChange('email')}
                   value={values.email}
                   error={touched.email && errors.email}
@@ -145,7 +150,7 @@ const Signup = () => {
                   label='Birth date'
                   icon='calendar'
                   placeholder='DD/MM/YYYY'
-                  onBlur={handleBlur('birthDate')}
+                  handleBlur={handleBlur('birthDate')}
                   handleChange={handleChange('birthDate')}
                   value={birth ? birth.toDateString() : ''}
                   type='date'
@@ -159,7 +164,7 @@ const Signup = () => {
                   eye='eye'
                   placeholder='******'
                   type='password'
-                  onBlur={handleBlur('password')}
+                  handleBlur={handleBlur('password')}
                   handleChange={handleChange('password')}
                   value={values.password}
                   error={touched.password && errors.password}
@@ -170,7 +175,7 @@ const Signup = () => {
                   eye='eye'
                   placeholder='******'
                   type='password'
-                  onBlur={handleBlur('confirmPassword')}
+                  handleBlur={handleBlur('confirmPassword')}
                   handleChange={handleChange('confirmPassword')}
                   value={values.confirmPassword}
                   error={touched.confirmPassword && errors.confirmPassword}
