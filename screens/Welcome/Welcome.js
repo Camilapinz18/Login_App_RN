@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Image, Text, TouchableOpacity, ScrollView,Button } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { containers, texts, graphics } from '../Welcome/welcomeStyles'
 import { CustomButton } from '../../components/customButton/CustomButton'
@@ -23,6 +23,7 @@ const Welcome = () => {
           <Text style={texts.info}>camilapinz18@gmail.com</Text>
         </View>
         <CustomButton label='Logout' navigation={()=>navigation.navigate("Login")}/>
+      
       </View>
     </ScrollView>
   )

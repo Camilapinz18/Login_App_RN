@@ -1,0 +1,33 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/adaptive-icon.png",
+      "sha1": "19b53640a95efdc2ccc7fc20f3ea4d0d381bb5c4"
+    },
+    {
+      "path": "assets/favicon.png",
+      "sha1": "cb25ca74ddc488c91522b0ae68fc846fac7f4174"
+    },
+    {
+      "path": "assets/icon.png",
+      "sha1": "3f71f5a8458c06b83424cc33e1f2481f601199ea"
+    },
+    {
+      "path": "assets/logo.png",
+      "sha1": "d119e15f41dc63cab5e426c4c408e91485c16d85"
+    },
+    {
+      "path": "assets/logoForGoogle.png",
+      "sha1": "be371d21e1e524dc8065e17ffffcc21bfc4ce1f3"
+    },
+    {
+      "path": "assets/splash.png",
+      "sha1": "8d2694fc0e21506af00ae556c92e4121f651cc54"
+    },
+    {
+      "path": "assets/welcome.png",
+      "sha1": "2b8d8b9ee0f1f1c46151b920852c01719bb8a3d9"
+    }
+  ]
+}
