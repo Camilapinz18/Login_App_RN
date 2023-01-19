@@ -15,7 +15,8 @@ export const CustomButton = ({
   navigation,
   handleLogin,
   handleSubmit,
-  isLoading
+  isLoading,
+  handleGoogleLogin
 }) => {
   return (
     <View>
@@ -23,8 +24,10 @@ export const CustomButton = ({
         <View style={containers.main}>
           <TouchableOpacity
             style={controls.buttonWithIcon}
-            onPress={handleSubmit}
-            disabled={isLoading ? true : false}
+            //onPressOut={handleSubmit}
+            onPress={() => handleGoogleLogin()}
+            //disabled={isLoading ? true : false}
+            disabled={true}
           >
             <View style={containers.buttonContainer}>
               <Fontisto

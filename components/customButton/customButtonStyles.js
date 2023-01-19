@@ -5,11 +5,11 @@ export const containers = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     //backgroundColor: 'green',
-    justifyContent:'space-evenly'
+    justifyContent: 'space-evenly'
   },
-  main:{
-    display:'flex',
-    alignItems:'center'
+  main: {
+    display: 'flex',
+    alignItems: 'center'
   }
 })
 
@@ -20,7 +20,7 @@ export const controls = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',
-    width:280
+    width: 280
   },
   buttonWithIcon: {
     marginTop: 20,
@@ -28,7 +28,7 @@ export const controls = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',
-    width:280
+    width: 280
     //backgroundColor: 'blue'
   }
 })
@@ -44,6 +44,7 @@ export const texts = StyleSheet.create({
 
 export const graphics = StyleSheet.create({
   iconButton: {
+    alignSelf: 'center'
     //position: 'absolute',
   }
 })

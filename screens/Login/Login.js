@@ -28,9 +28,9 @@ const Login = () => {
   const [messageType, setMessageType] = useState('')
   const [showMessageBox, setShowMessageBox] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
+  let useInfo = ''
   const [accessToken, setAccessToken] = useState(null)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState('')
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
       '889998040806-uim6hgghnibpq0m14dlg1l7dalcdtojl.apps.googleusercontent.com',
@@ -47,7 +47,7 @@ const Login = () => {
     }
   }, [response, accessToken])
 
-  const showUserInfo = () => {
+  const ShowUserInfo = () => {
     if (user) {
       return (
         <View>
@@ -57,16 +57,6 @@ const Login = () => {
         </View>
       )
     }
-  }
-
-  async function fetchUserInfo () {
-    let response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-    const useInfo = await response.json()
-    setUser(useInfo)
   }
 
   const handleMessage = (message, type = 'FAILED') => {
@@ -84,36 +74,71 @@ const Login = () => {
       email: email,
       password: password
     }
-    setIsLoading(true)
-    axios
-      .post('https://panicky-foal-wear.cyclic.app/api/users/signin', object)
-      .then(response => {
-        console.log('responsedaat', response.data)
-        console.log('response', response.status)
-        if (response.data.status === 'OK') {
-          navigation.navigate('Welcome')
-          setIsLoading(false)
-        } else if (response.data.status === 'FAILED') {
-          if (response.data.message === 'AILED TO Signed IN') {
-            setMessage(response.data.message)
-            setShowMessageBox(true)
-            console.log('clave incorrect')
-            alert('Wrong password. Try again')
+
+    if (email === '' || password === '') {
+      alert('You must fill all the fields to sign in')
+    } else {
+      setIsLoading(true)
+      axios
+        .post('https://panicky-foal-wear.cyclic.app/api/users/signin', object)
+        .then(response => {
+          console.log('responsedaat', response.data)
+          console.log('response', response.status)
+          if (response.data.status === 'OK') {
+            navigation.navigate('Welcome')
             setIsLoading(false)
+          } else if (response.data.status === 'FAILED') {
+            
+            console.log("ESTADO",response.data.status)
+            if (response.data.message === 'AILED TO Signed IN') {
+              setMessage(response.data.message)
+              setShowMessageBox(true)
+              console.log('clave incorrect')
+              alert('Wrong password. Try again')
+              setIsLoading(false)
+            }else if (response.data.message === 'Password is too short') {
+              setMessage(response.data.message)
+              setShowMessageBox(true)
+              console.log('clave incorrect')
+              alert('Invalid email or password')
+              setIsLoading(false)
+            }
+            //setShowMessageBox(true)
+            //console.log('ESTOY EN AILED')
+            setTimeout(() => {
+              setShowMessageBox(false)
+            }, 3000)
           }
-          //setShowMessageBox(true)
-          //console.log('ESTOY EN FAILED')
-          setTimeout(() => {
-            setShowMessageBox(false)
-          }, 3000)
-        }
-      })
-      .catch(error => console.log(error))
+        })
+        .catch(error => console.log(error))
+    }
   }
 
   // const handleGoogleSignin=()={
 
   // }
+
+  async function fetchUserInfo () {
+    setUser('no')
+    let response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    useInfo = response.json()
+    //return useInfo
+    setUser(useInfo)
+    console.log('user', user)
+  }
+
+  const setUserInfo = info => {
+    setUser(info)
+  }
+
+  function handleGoogleLogin () {
+    promptAsync()
+    useInfo.length ? navigation.navigate('Welcome') : ''
+  }
 
   return (
     <ScrollView>
@@ -165,11 +190,7 @@ const Login = () => {
                   handleBlur={handleBlur('password')}
                   value={values.password}
                 />
-                {showMessageBox ? (
-                  <MessageBox message='Failed to sign-up' />
-                ) : (
-                  ''
-                )}
+
                 <View style={containers.buttonsContainer}>
                   <CustomButton
                     label='Login'
@@ -181,24 +202,14 @@ const Login = () => {
                   <CustomButton
                     label='Sign in with Google'
                     icon={true}
-                    handleSubmit={handleSubmit}
+                    //handleSubmit={handleSubmit}
+                    handleGoogleLogin={handleGoogleLogin}
+                    isLoading={isLoading}
                   />
                 </View>
               </View>
             )}
           </Formik>
-
-          {user && <showUserInfo />}
-          {user === null && (
-            <View>
-              <Button
-                title='signin'
-                onPress={() => {
-                  promptAsync()
-                }}
-              ></Button>
-            </View>
-          )}
 
           <View style={containers.textContainer}>
             <Text style={texts.accountText}>
