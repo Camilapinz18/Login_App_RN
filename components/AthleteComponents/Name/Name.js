@@ -12,10 +12,15 @@ import {
   generalTexts
 } from '../../BoardComponents/Weightlifter/WeightlifterStyles'
 
-const Start = () => {
+const Start = ({ title,name}) => {
+  console.log('nametitlke', title)
   return (
     <View style={generalContainers.NameFieldContainer}>
-      <Text style={generalTexts.fieldText}>Name</Text>
+      {title ? (
+        <Text style={generalTexts.fieldText}>Start</Text>
+      ) : (
+        <Text style={generalTexts.fieldText}>{name}</Text>
+      )}
     </View>
   )
 }

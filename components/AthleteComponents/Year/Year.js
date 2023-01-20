@@ -12,10 +12,11 @@ import {
   generalTexts
 } from '../../BoardComponents/Weightlifter/WeightlifterStyles'
 
-const Start = () => {
+const Start = ({title,year}) => {
   return (
     <View style={generalContainers.fieldContainer}>
-      <Text style={generalTexts.fieldText}>Year</Text>
+     {title ===true? ( <Text style={generalTexts.fieldText}>Year</Text>):( <Text style={generalTexts.fieldText}>{year}</Text>)}
+     
     </View>
   )
 }

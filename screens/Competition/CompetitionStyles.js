@@ -12,6 +12,7 @@ export const containers = StyleSheet.create({
   },
   boardContainer:{
     display:'flex',
+    width:'100%'
     
   }
 })

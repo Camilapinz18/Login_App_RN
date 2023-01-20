@@ -6,7 +6,7 @@ import {
   ScrollView,
   Button
 } from 'react-native'
-import { containers } from './WeightlifterStyles'
+import { containers } from './WeighlifterTitleStyles'
 import { useEffect, useState } from 'react'
 import Lot from '../../AthleteComponents/Lot/Lot'
 import Start from '../../AthleteComponents/Start/Start'
@@ -17,20 +17,20 @@ import CleanJerk from '../../AthleteComponents/Snatch/Snatch'
 import Total from '../../AthleteComponents/Total/Total'
 import Rank from '../../AthleteComponents/Rank/Rank'
 
-const Weightlifter = (props) => {
- console.log("recive",props)
+const WeightlifterTitle = () => {
+  //console.log('Titulo weight', title)
   return (
     <View style={containers.weightlifterContainer}>
-      <Lot lot={props.lot}/>
-      <Start start={props.start}/>
-      <Name name={props.name}/>
-      <Year year={props.year} />
-      <Snatch />
-      <CleanJerk />
-      <Total />
-      <Rank />
+      <Lot title={true}/>
+      <Start title={true}/>
+      <Name title={true} />
+      <Year title={true}/>
+      <Snatch title={true} />
+      <CleanJerk title={true} />
+      <Total title={true} />
+      <Rank title={true} />
     </View>
   )
 }
 
-export default Weightlifter
+export default WeightlifterTitle

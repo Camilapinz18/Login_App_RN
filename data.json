@@ -1,0 +1,68 @@
+[
+  {
+    "lot": 135,
+    "start": 2,
+    "name": "Yenny Alvarez",
+    "year":1996,
+    "snatch": {
+      "1": 90,
+      "2": 93,
+      "3": 94,
+      "result": 94,
+      "rank": 1
+    },
+    "cleanJerk": {
+      "1": 120,
+      "2": 122,
+      "3": 125,
+      "result": 125,
+      "rank": 1
+    },
+    "total": 200,
+    "rank": 1
+  },
+  {
+    "lot": 135,
+    "start": 2,
+    "name": "Yenny Alvarez",
+    "year":1996,
+    "snatch": {
+      "1": 90,
+      "2": 93,
+      "3": 94,
+      "result": 94,
+      "rank": 1
+    },
+    "cleanJerk": {
+      "1": 120,
+      "2": 122,
+      "3": 125,
+      "result": 125,
+      "rank": 1
+    },
+    "total": 200,
+    "rank": 1
+  },
+  {
+    "lot": 135,
+    "start": 2,
+    "name": "Yenny Alvarez",
+    "year":1996,
+    "snatch": {
+      "1": 90,
+      "2": 93,
+      "3": 94,
+      "result": 94,
+      "rank": 1
+    },
+    "cleanJerk": {
+      "1": 120,
+      "2": 122,
+      "3": 125,
+      "result": 125,
+      "rank": 1
+    },
+    "total": 200,
+    "rank": 1
+  }
+]
