@@ -17,15 +17,11 @@ import { CustomButton } from '../../components/customButton/CustomButton'
 import { InputComponent } from '../../components/InputComponent/InputComponent'
 import { MessageBox } from '../../components/MessageBox/MessageBox'
 import axios from 'axios'
-import {
-  getAuth,
-  
-  signInWithEmailAndPassword
-} from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { firebaseConfig } from '../../firebase'
-
-
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import 'expo-dev-client'
 const Login = () => {
   const navigation = useNavigation()
   const [message, setMessage] = useState('')
@@ -36,6 +32,8 @@ const Login = () => {
   const app = initializeApp(firebaseConfig)
   const auth = getAuth(app)
 
+  const provider = new GoogleAuthProvider()
+
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message)
     setMessageType(type)
@@ -43,6 +41,27 @@ const Login = () => {
 
   const getInputValues = () => {}
 
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then(result => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential.accessToken
+        // The signed-in user info.
+        const user = result.user
+        // ...
+      })
+      .catch(error => {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.customData.email
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error)
+        // ...
+      })
+  }
   const handleLogin = (email, password) => {
     console.log('estoy en handle login')
     console.log('mail', email, 'password', password)
@@ -52,14 +71,16 @@ const Login = () => {
       password: password
     }
 
-    signInWithEmailAndPassword(auth,email,password).then((userCredential)=>{
-      console.log("SigneedIn")
-      const user=userCredential.user
-      console.log("User created:",user)
-      navigation.navigate("Welcome")
-    }).catch(error=>{
-      console.log(error,"not SignedIn")
-    })
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        console.log('SigneedIn')
+        const user = userCredential.user
+        console.log('User created:', user)
+        navigation.navigate('Welcome')
+      })
+      .catch(error => {
+        console.log(error, 'not SignedIn')
+      })
     // setIsLoading(true)
     // axios
     //   .post('https://panicky-foal-wear.cyclic.app/api/users/signin', object)
@@ -105,8 +126,6 @@ const Login = () => {
         <Text style={texts.subtitle}>Account login</Text>
 
         <View>
-         
-
           <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={values => {
@@ -158,7 +177,7 @@ const Login = () => {
                   <CustomButton
                     label='Sign in with Google'
                     icon={true}
-                    handleSubmit={handleSubmit}
+                    handleSubmit={handleGoogleLogin}
                   />
                 </View>
               </View>

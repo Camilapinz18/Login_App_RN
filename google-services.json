@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1090190681397",
+    "project_id": "wt-app-210a4",
+    "storage_bucket": "wt-app-210a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090190681397:android:75d30a2d460828cd05587c",
+        "android_client_info": {
+          "package_name": "om.camilapinz18.login_app_rn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090190681397-jj7flrmfem67cn1plqqob3ibu1t902gg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "om.camilapinz18.login_app_rn",
+            "certificate_hash": "129b1002519c07e580ac7aef4dc04ad53e1d67fc"
+          }
+        },
+        {
+          "client_id": "1090190681397-rkj5a0iqlnd1m8mlf9ssqmlvhea88tc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "om.camilapinz18.login_app_rn",
+            "certificate_hash": "fcb6303027c574f607a3d65b7a63b85b379ad6ae"
+          }
+        },
+        {
+          "client_id": "1090190681397-etebo8v03fgqr4l7oe4bvgdgnf21o0cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcChvsULl3wDWPZngd-vPpIRcnThhKCCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090190681397-etebo8v03fgqr4l7oe4bvgdgnf21o0cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
