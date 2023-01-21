@@ -10,6 +10,13 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import axios from 'axios'
 import { Formik } from 'formik'
 import * as yup from 'yup'
+import {
+  getAuth,
+  createUserWithEmailAndPassword
+  
+} from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import { firebaseConfig } from '../../firebase'
 
 const Signup = () => {
   const navigation = useNavigation()
@@ -17,6 +24,9 @@ const Signup = () => {
   const [date, setDate] = useState(new Date())
   const [birth, setBirth] = useState()
   const [isLoading, setIsLoading] = useState(false)
+
+  const app = initializeApp(firebaseConfig)
+  const auth = getAuth(app)
 
   const onChange = (event, selectedDate) => {
     setShow(false)
@@ -40,19 +50,29 @@ const Signup = () => {
       password: password
     }
     setIsLoading(true)
-    axios
-      .post('https://panicky-foal-wear.cyclic.app/api/users/signup', object)
-      .then(response => {
-        console.log('Estoy en response')
-        if (response.data.status === 'OK') {
-          console.log('foe ok')
-          setIsLoading(false)
-          navigation.navigate('Welcome')
-        } else if (response.data.status === 'FAILED') {
-          setIsLoading(false)
-          alert(response.data.message)
-        }
-      })
+
+    createUserWithEmailAndPassword(auth,email,password).then((userCredential)=>{
+      console.log("account created")
+      const user=userCredential.user
+      console.log("User created:",user)
+      navigation.navigate("Welcome")
+    }).catch(error=>{
+      console.log(error,"not created")
+    })
+
+    // axios
+    //   .post('https://panicky-foal-wear.cyclic.app/api/users/signup', object)
+    //   .then(response => {
+    //     console.log('Estoy en response')
+    //     if (response.data.status === 'OK') {
+    //       console.log('foe ok')
+    //       setIsLoading(false)
+    //       navigation.navigate('Welcome')
+    //     } else if (response.data.status === 'FAILED') {
+    //       setIsLoading(false)
+    //       alert(response.data.message)
+    //     }
+    //   })
   }
 
   const validationSchema = yup.object({

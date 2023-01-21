@@ -17,6 +17,14 @@ import { CustomButton } from '../../components/customButton/CustomButton'
 import { InputComponent } from '../../components/InputComponent/InputComponent'
 import { MessageBox } from '../../components/MessageBox/MessageBox'
 import axios from 'axios'
+import {
+  getAuth,
+  
+  signInWithEmailAndPassword
+} from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import { firebaseConfig } from '../../firebase'
+
 
 const Login = () => {
   const navigation = useNavigation()
@@ -24,6 +32,9 @@ const Login = () => {
   const [messageType, setMessageType] = useState('')
   const [showMessageBox, setShowMessageBox] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  const app = initializeApp(firebaseConfig)
+  const auth = getAuth(app)
 
   const handleMessage = (message, type = 'FAILED') => {
     setMessage(message)
@@ -34,37 +45,46 @@ const Login = () => {
 
   const handleLogin = (email, password) => {
     console.log('estoy en handle login')
-    //console.log('mail', email, 'password', password)
+    console.log('mail', email, 'password', password)
 
     const object = {
       email: email,
       password: password
     }
-    setIsLoading(true)
-    axios
-      .post('https://panicky-foal-wear.cyclic.app/api/users/signin', object)
-      .then(response => {
-        console.log('responsedaat', response.data)
-        console.log('response', response.status)
-        if (response.data.status === 'OK') {
-          navigation.navigate('Welcome')
-          setIsLoading(false)
-        } else if (response.data.status === 'FAILED') {
-          if (response.data.message === 'AILED TO Signed IN') {
-            setMessage(response.data.message)
-            setShowMessageBox(true)
-            console.log('clave incorrect')
-            alert('Wrong password. Try again')
-            setIsLoading(false)
-          }
-          //setShowMessageBox(true)
-          //console.log('ESTOY EN FAILED')
-          setTimeout(() => {
-            setShowMessageBox(false)
-          }, 3000)
-        }
-      })
-      .catch(error => console.log(error))
+
+    signInWithEmailAndPassword(auth,email,password).then((userCredential)=>{
+      console.log("SigneedIn")
+      const user=userCredential.user
+      console.log("User created:",user)
+      navigation.navigate("Welcome")
+    }).catch(error=>{
+      console.log(error,"not SignedIn")
+    })
+    // setIsLoading(true)
+    // axios
+    //   .post('https://panicky-foal-wear.cyclic.app/api/users/signin', object)
+    //   .then(response => {
+    //     console.log('responsedaat', response.data)
+    //     console.log('response', response.status)
+    //     if (response.data.status === 'OK') {
+    //       navigation.navigate('Welcome')
+    //       setIsLoading(false)
+    //     } else if (response.data.status === 'FAILED') {
+    //       if (response.data.message === 'AILED TO Signed IN') {
+    //         setMessage(response.data.message)
+    //         setShowMessageBox(true)
+    //         console.log('clave incorrect')
+    //         alert('Wrong password. Try again')
+    //         setIsLoading(false)
+    //       }
+    //       //setShowMessageBox(true)
+    //       //console.log('ESTOY EN FAILED')
+    //       setTimeout(() => {
+    //         setShowMessageBox(false)
+    //       }, 3000)
+    //     }
+    //   })
+    //   .catch(error => console.log(error))
   }
 
   // const handleGoogleSignin=()={
